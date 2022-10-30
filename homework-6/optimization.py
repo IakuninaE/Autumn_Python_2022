@@ -107,7 +107,8 @@ class LineSearchTool(object):
         derphi = lambda alpha_k: oracle.grad(x_k + alpha_k * d_k).dot(d_k)
 
         if self._method == 'Wolfe':
-            alpha = scalar_search_wolfe2(phi, derphi, c1=self.c1, c2=self.c2)[0]
+            res = scalar_search_wolfe2(phi, derphi, c1=self.c1, c2=self.c2)
+            alpha = res[0]
             if alpha == None:
                 self._method = 'Armijo'
                 return self.line_search(oracle, x_k, d_k, previous_alpha)
